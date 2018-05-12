@@ -12,7 +12,17 @@ then
 else
 	echo "Stopped" >> $log
 	status="Not Running"
-	sudo hologram modem connect >> $log
+	sleep 10
+	sudo /usr/local/bin/hologram modem connect >> $log
 fi
 sleep 10
 sudo hologram send "Startup on $dlong, Hologram was $status." >> $log
+if ip route | grep ppp > /dev/null
+then
+	echo "route up" >> $log
+else
+	echo "route down" >> $log
+	sudo /usr/local/bin/hologram modem disconnect >> $log
+	sleep 10
+	sudo /usr/local/bin/hologram modem connect >> $log
+fi
