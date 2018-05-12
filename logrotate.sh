@@ -13,7 +13,6 @@ do
 		dlog=/var/log/NOVA/NOVA-$dlong.log
 		mv $log $dlog
 		touch $log
-		chown -R pi:pi /var/log/NOVA
 		echo "Logs Moved to $dlog" | ts '[%Y-%m-%d %H:%M:%S]' >> $log
 	fi
 done
