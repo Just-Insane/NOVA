@@ -2,9 +2,12 @@
 d=$(date '+%Y-%m-%d')
 dlong=$(date)
 log=/var/log/NOVA/NOVA-$d.log
+i="0"
+
 touch $log
 echo "Starting NOVA script on $dlong" >> $log
 sleep 10
+
 if pgrep "ppp" > /dev/null
 then
 	echo "Running" >> $log
@@ -17,12 +20,14 @@ else
 fi
 sleep 10
 sudo hologram send "Startup on $dlong, Hologram was $status." >> $log
+
+while [ $i -lt 1 ]; do
 if ip route | grep ppp > /dev/null
 then
-	echo "route up" >> $log
+	sleep 60
 else
-	echo "route down" >> $log
 	sudo /usr/local/bin/hologram modem disconnect >> $log
 	sleep 10
 	sudo /usr/local/bin/hologram modem connect >> $log
 fi
+done
