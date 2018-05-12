@@ -1,7 +1,6 @@
 #!/bin/bash
-d=$(date '+%Y-%m-%d-%s')
+dlong=$(date '+%Y-%m-%d-%s')
 log=/var/log/NOVA/NOVA.log
-dlog=/var/log/NOVA/NOVA-$d.log
 MaxFileSize=2048
 while true
 do
@@ -10,7 +9,10 @@ do
 	file_size=`du -b $log | tr -s '\t' ' ' | cut -d' ' -f1`
 	if [ $file_size -gt $MaxFileSize ];
 	then
-		mv $log /var/log/NOVA/NOVA-$d-{1,2,3}.log
+		echo "$dlong Moving logs." >> $log
+		dlog=/var/log/NOVA/NOVA-$dlong-{1,2,3}.log
+		mv $log $dlog
 		touch $log
+		echo "$dlong Logs Moved to $dlog" >> $log
 	fi
 done
