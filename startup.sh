@@ -1,41 +1,32 @@
 #!/bin/bash
 d=$(date '+%Y-%m-%d')
 dlong=$(date)
-log=/var/log/NOVA/NOVA.log
-dlog=/var/log/NOVA/NOVA-$d.log
 i="0"
 
-echo "Starting NOVA script on $dlong" #>> $log
+echo "Starting NOVA script on $dlong"
 sleep 10
 
 if pgrep "ppp" > /dev/null
 then
-	echo "PPP Process Running" #>> $log
+	echo "PPP Process Running"
 	status="Running"
 else
-	echo "PPP Process Stopped" #>> $log
+	echo "PPP Process Stopped"
 	status="Not Running"
 	sleep 10
-	sudo /usr/local/bin/hologram modem connect #>> $log
+	sudo /usr/local/bin/hologram modem connect
 fi
 sleep 10
-sudo hologram send "Startup on $dlong, Hologram was $status." #>> $log
+sudo hologram send "Startup on $dlong, Hologram was $status."
 
 while [ $i -lt 1 ]; do
 if ip route | grep ppp > /dev/null
 then
-	echo "Route is UP!" #>> $log
+	echo "Route is UP!"
 	sleep 60
 else
-	sudo /usr/local/bin/hologram modem disconnect #>> $log
+	sudo /usr/local/bin/hologram modem disconnect
 	sleep 10
-	sudo /usr/local/bin/hologram modem connect #>> $log
-fi
-if [ ! -f $dlog ];
-then
-	echo "File not found!" #>> $log
-else
-	echo "File Found!" #>> $log
-	i++
+	sudo /usr/local/bin/hologram modem connect
 fi
 done
