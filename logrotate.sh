@@ -1,7 +1,7 @@
 #!/bin/bash
-dlong=$(date '+%Y-%m-%d-%S')
-log=/var/log/NOVA/NOVA.log
-MaxFileSize=2048
+dlong = $(date '+%Y-%m-%d-%S')
+log = /var/log/NOVA/NOVA.log
+MaxFileSize = 2048
 while true
 do
 	sh /home/pi/scripts/startup.sh | ts '[%Y-%m-%d %H:%M:%S]' >> $log

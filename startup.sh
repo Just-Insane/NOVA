@@ -1,7 +1,8 @@
 #!/bin/bash
-d=$(date '+%Y-%m-%d-%S')
-dlong=$(date)
-i="0"
+d = $(date '+%Y-%m-%d-%S')
+dlong = $(date)
+i = "0"
+count = "0"
 
 echo "Starting NOVA script."
 if pgrep "ppp" > /dev/null
@@ -22,6 +23,12 @@ then
 else
 	echo "Route is DOWN!"
 	sudo /usr/local/bin/hologram modem disconnect
+	sleep 10
 	sudo /usr/local/bin/hologram modem connect
+	count=$((count+1))
+fi
+if [ count -gt 5 ]
+then
+	sudo reboot
 fi
 done
