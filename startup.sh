@@ -1,17 +1,17 @@
 #!/bin/bash
-d=$(date '+%Y-%m-%d-%s')
+d=$(date '+%Y-%m-%d-%S')
 dlong=$(date)
 i="0"
 
-echo "$dlong Starting NOVA script."
+echo "Starting NOVA script."
 sleep 10
 
 if pgrep "ppp" > /dev/null
 then
-	echo "$dlong PPP Process Running."
+	echo "PPP Process Running."
 	status="Running"
 else
-	echo "$dlong PPP Process Stopped."
+	echo "PPP Process Stopped."
 	status="Not Running"
 	sleep 10
 	sudo /usr/local/bin/hologram modem connect
@@ -22,10 +22,10 @@ sudo hologram send "Startup on $dlong, Hologram was $status."
 while [ $i -lt 1 ]; do
 if ip route | grep ppp > /dev/null
 then
-	echo "$dlong Route is UP!"
+	echo "Route is UP!"
 	sleep 60
 else
-	echo "$dlong Route is DOWN!"
+	echo "Route is DOWN!"
 	sudo /usr/local/bin/hologram modem disconnect
 	sleep 10
 	sudo /usr/local/bin/hologram modem connect
