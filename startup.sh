@@ -25,6 +25,7 @@ then
 	echo "Route is UP!"
 	sleep 60
 else
+	echo "Route is DOWN!"
 	sudo /usr/local/bin/hologram modem disconnect
 	sleep 10
 	sudo /usr/local/bin/hologram modem connect
